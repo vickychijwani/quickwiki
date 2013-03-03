@@ -43,14 +43,15 @@ Source code layout
 
 See the [developer docs for Google Chrome Extensions][docs] to learn more about how they're structured.
 
-Bugs? Feature requests?
------------------------
+Bugs? Feature requests? Pull requests?
+--------------------------------------
 
-[File an issue][issues] in this repository.
+All of those are welcome. You can [file issues][issues] or [submit pull requests][pulls] in this repository.
 
 
 [pgac]: http://developer.chrome.com/extensions/pageAction.html
 [issues]: https://github.com/vickychijwani/quickwiki/issues
+[pulls]: https://github.com/vickychijwani/quickwiki/pulls
 [docs]: http://developer.chrome.com/extensions/getstarted.html
 [webstore]: https://chrome.google.com/webstore
 [install]: https://chrome.google.com/webstore/detail/quickwiki/bbidbpklpaghmdjnlkkhkkobcbjgbkbd
