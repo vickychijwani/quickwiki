@@ -26,8 +26,6 @@ Yeah, I know. The magic analogy annoys the hell out of me, too. Time to ditch it
 Features
 --------
 
-For anyone who needs a list of features as text:
-
  - Preview articles in ANY language, on ANY wiki across the Internet
  - Fullscreen wiki-browsing, for times when you're deep down a rabbit hole
  - Minimize preview window to remove clutter without losing your position in the previewed article
