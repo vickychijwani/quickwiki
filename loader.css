@@ -1,0 +1,78 @@
+.wiki-loader {
+  position: relative;
+  width: 64px;
+  height: 5px;
+  margin-top: 8px;
+}
+
+.followingBallsG {
+  background-color: #555555;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 5px;
+  height: 5px;
+  -webkit-border-radius: 3px;
+  -webkit-animation-name: bounce_followingBallsG;
+  -webkit-animation-duration: 1.4s;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-direction: linear;
+  border-radius: 3px;
+  animation-name: bounce_followingBallsG;
+  animation-duration: 1.4s;
+  animation-iteration-count: infinite;
+  animation-direction: linear;
+}
+
+#followingBallsG_1 {
+  -webkit-animation-delay: 0s;
+}
+
+#followingBallsG_1 {
+  animation-delay: 0s;
+}
+
+#followingBallsG_2 {
+  -webkit-animation-delay: 0.14s;
+  animation-delay: 0.14s;
+}
+
+#followingBallsG_3 {
+  -webkit-animation-delay: 0.28s;
+  animation-delay: 0.28s;
+}
+
+#followingBallsG_4 {
+  -webkit-animation-delay: 0.42s;
+  animation-delay: 0.42s;
+}
+
+@-webkit-keyframes bounce_followingBallsG {
+  0% {
+    left: 0px;
+    background-color: #555555;
+  }
+  50% {
+    left: 59px;
+    background-color: #FFFFFF;
+  }
+  100% {
+    left: 0px;
+    background-color: #555555;
+  }
+}
+
+@keyframes bounce_followingBallsG {
+  0% {
+    left: 0px;
+    background-color: #555555;
+  }
+  50% {
+    left: 59px;
+    background-color: #FFFFFF;
+  }
+  100% {
+    left: 0px;
+    background-color: #555555;
+  }
+}
