@@ -88,7 +88,7 @@ function QuickWiki() {
             .append('<div id="controls"><p></p></div>')
             .find('#controls > p')
             .append('<i class="icon-resize-full" id="wiki-expand" title="Expand this preview window"></i>')
-            .append('<a target="_blank" href="http://'+window.location.host+$(this).attr('href')+'"><i class="icon-share-alt" id="wiki-open" title="Open this article in a new tab"></i></a>')
+            .append('<a target="_blank" href="'+window.location.protocol+'//'+window.location.host+$(this).attr('href')+'"><i class="icon-share-alt" id="wiki-open" title="Open this article in a new tab"></i></a>')
             .append('<i class="icon-minus" id="wiki-minimize" title="Minimize QuickWiki"></i>')
             .append('<i class="icon-remove" id="wiki-close" title="Close QuickWiki"></i>');
 
@@ -143,7 +143,7 @@ function QuickWiki() {
           $('#wiki-close, #wiki-open').live('click', quickwiki_close);
 
           // load the content from the link into the QuickWiki "window"
-          loadContent('http://'+window.location.host+$(this).attr('href')+' #content');
+          loadContent(window.location.protocol+'//'+window.location.host+$(this).attr('href')+' #content');
 
           // make the QuickWiki "window" draggable
           title
@@ -256,7 +256,7 @@ function loadContent(url) {
 
         $(this).unbind('click').click(function (e) {
           e.preventDefault();
-          loadContent('http://' + window.location.host + $(this).attr('href') + ' #content');
+          loadContent(window.location.protocol+'//'+window.location.host+$(this).attr('href')+' #content');
         });
       });
     }

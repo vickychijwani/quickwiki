@@ -1,6 +1,6 @@
 {
   "name": "QuickWiki",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Preview articles on Wikipedia and other wikis - become a wiki power-user!",
   "background": { "scripts": ["background.js"] },
   "page_action" : {
@@ -17,7 +17,7 @@
   ],
   "content_scripts": [
     {
-      "matches": ["http://*/wiki/*"],
+      "matches": ["*://*/wiki/*"],
       "css": ["style.css", "icons.css", "scrollbar.css", "loader.css"],
       "js": ["jquery-1.4.2.min.js", "script.js"],
       "run_at": "document_end"
