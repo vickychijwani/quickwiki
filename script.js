@@ -59,10 +59,11 @@ function QuickWiki() {
           }
             
           // always keep the modal within the browser viewport in respect to height  
-          if((top+550-$(document).scrollTop())>$(window).height()) {
-            var diff = (top+550-$(document).scrollTop())-$(window).height();
+          var diff = (top+550-$(document).scrollTop())-$(window).height();
+            
+          if(diff > 0) {
             top = top - diff - 20;                  //extra padding of 20
-          } 
+          }
 
           if (o.left + w + 525 < $(window).width()) {
             left = o.left + w + 5;
