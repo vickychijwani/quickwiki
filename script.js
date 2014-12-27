@@ -36,7 +36,7 @@ function QuickWiki() {
           var o = $(this).offset();
           var w = $(this).width();
           var h = $(this).height();
-          var top, left, minimize_to;
+          var top, left, minimize_to; 
 
           // calculate the position of the QuickWiki window in such a way that it never goes out of the browser's current view
           if (h <= 16) {
@@ -55,7 +55,14 @@ function QuickWiki() {
           else {
             left = o.left;
             top = o.top + 40;
-            minimize_to = 'top left';
+            minimize_to = 'top left'; 
+          }
+            
+          // always keep the modal within the browser viewport in respect to height  
+          var diff = (top+550-$(document).scrollTop())-$(window).height();
+            
+          if(diff > 0) {
+            top = top - diff - 20;                  //extra padding of 20
           }
 
           if (o.left + w + 525 < $(window).width()) {
