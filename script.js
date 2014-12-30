@@ -149,8 +149,9 @@ function QuickWiki() {
           });
           $('#wiki-close, #wiki-open').live('click', quickwiki_close);
 
+            
           // load the content from the link into the QuickWiki "window"
-          loadContent(window.location.protocol+'//'+window.location.host+$(this).attr('href')+' #content');
+          loadContent(window.location.protocol+'//'+window.location.host+$(this).attr('href')+' ' + getIdTag());
 
           // make the QuickWiki "window" draggable
           title
@@ -251,11 +252,15 @@ function loadContent(url) {
     $("#wiki-title").prepend('<div id="wiki-title-info"></div>');
     if (status != 'error') {
       var heading = content
-        .find('div#content')
+        .find('div'+getIdTag())
         .css({ 'margin-left': '0px' })
         .find('h1:eq(0)')
         .text();
       $('#wiki-title-info').html('QuickWiki: ' + heading);
+      if(isWikia()) {
+          content.find('div' +getIdTag())
+                 .css({ 'margin-right' : '0px', 'margin-top' : '5px'});
+      }
       content.find('a[href^=/wiki/]').each(function () {
         // tips on hover
         var link_title = $(this).attr('title');
@@ -263,9 +268,12 @@ function loadContent(url) {
 
         $(this).unbind('click').click(function (e) {
           e.preventDefault();
-          loadContent(window.location.protocol+'//'+window.location.host+$(this).attr('href')+' #content');
+          loadContent(window.location.protocol+'//'+window.location.host+$(this).attr('href')+' ' + getIdTag());
         });
       });
+      //always render scroll to top, specially added to handle in modal window navigations
+      $(this).scrollTop(0);    
+      
     }
   });
 }
@@ -298,4 +306,26 @@ function get_loader_html() {
       '<div id="followingBallsG_3" class="followingBallsG"></div>' +
       '<div id="followingBallsG_4" class="followingBallsG"></div>' +
     '</div>';
+}
+
+//check whether the url is from wikia.com
+
+function isWikia() {
+  var host = window.location.host;
+  return host.indexOf("wikia.com") > -1; 
+}
+
+//set appropriate content id for url type
+
+function getIdTag() {
+  var idTag = '';     
+  if(isWikia()) {
+      //the link is from wikia.com, set appropriate id tag
+      idTag = "#WikiaMainContentContainer";
+  }
+  else {
+      //the link is from wikimedia, set appropriate id tag
+      idTag = "#content";
+  }
+  return idTag;
 }
