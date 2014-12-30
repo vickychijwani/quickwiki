@@ -312,10 +312,7 @@ function get_loader_html() {
 
 function isWikia() {
   var host = window.location.host;
-  if(host.indexOf("wikia.com") > -1) 
-      return true;
-  else
-      return false;
+  return host.indexOf("wikia.com") > -1; 
 }
 
 //set appropriate content id for url type
