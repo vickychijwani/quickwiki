@@ -248,7 +248,6 @@ function loadContent(url) {
   var content = $('#wiki-content');
   $('#wiki-title-info').html(get_loader_html());
   content.load(url, function (res, status, xhr) {
-    console.log(content);  
     $('#wiki-title-info').remove('');
     $("#wiki-title").prepend('<div id="wiki-title-info"></div>');
     if (status != 'error') {
