@@ -257,7 +257,7 @@ function loadContent(url) {
         .find('h1:eq(0)')
         .text();
       $('#wiki-title-info').html('QuickWiki: ' + heading);
-      if(getHost()==="wikia") {
+      if(isWikia()) {
           content.find('div' +getIdTag())
                  .css({ 'margin-right' : '0px', 'margin-top' : '5px'});
       }
@@ -308,26 +308,26 @@ function get_loader_html() {
     '</div>';
 }
 
-//check whether the url is from wikia or wikipedia
+//check whether the url is from wikia.com
 
-function getHost() {
+function isWikia() {
   var host = window.location.host;
   if(host.indexOf("wikia.com") > -1) 
-      return "wikia";
-  if(host.indexOf("wikipedia.org") > -1)
-      return "wikipedia";
+      return true;
+  else
+      return false;
 }
 
 //set appropriate content id for url type
 
 function getIdTag() {
   var idTag = '';     
-  if(getHost()==="wikia") {
+  if(isWikia()) {
       //the link is from wikia.com, set appropriate id tag
       idTag = "#WikiaMainContentContainer";
   }
-  else if(getHost()==="wikipedia") {
-      //the link is from wikipedia.org, set appropriate id tag
+  else {
+      //the link is from wikimedia, set appropriate id tag
       idTag = "#content";
   }
   return idTag;
