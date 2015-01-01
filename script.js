@@ -12,7 +12,7 @@ function quickwiki_close() {
 }
 
 function QuickWiki() {
-  $('a[href^=/wiki/]')
+  $('a[href^="/wiki/"]')                //providing quotes in href is mandatory post jquery 1.4
   //.not('a[href*=:]')
   //.not('a[href^=/wiki/Main_Page]')
     .each(function (i) {
@@ -63,6 +63,7 @@ function QuickWiki() {
             
           if(diff > 0) {
             top = top - diff - 20;                  //extra padding of 20
+            if(top<0) top = 5;                      //adjust top position if exceeds viewport from top  
           }
 
           if (o.left + w + 525 < $(window).width()) {
@@ -147,7 +148,7 @@ function QuickWiki() {
             }
             toggle(0, minimize_to);
           });
-          $('#wiki-close, #wiki-open').live('click', quickwiki_close);
+          $('#wiki-close, #wiki-open').on('click', quickwiki_close);
 
             
           // load the content from the link into the QuickWiki "window"
@@ -161,19 +162,11 @@ function QuickWiki() {
               var dy = d.offset().top;
               var xgap = e.pageX - dx;
               var ygap = e.pageY - dy;
-              if (!$.browser.msie) {
-                e.preventDefault();
-              }
+              
               $(document).mousemove(function (e) {
                 var x = e.pageX - xgap;
                 var y = e.pageY - ygap;
-                if ($.browser.msie) {
-                  // IE only here
-                  e.preventDefault();
-                  if (e.pageX >= 0 && e.pageY >= 0) d.css({ left: x, top: y });
-                  return false;
-                }
-                // FF only here
+                
                 if (e.pageX >= 0 && e.pageY >= 0) d.css({ left: x, top: y });
                 return true;
               });
@@ -261,7 +254,7 @@ function loadContent(url) {
           content.find('div' +getIdTag())
                  .css({ 'margin-right' : '0px', 'margin-top' : '5px'});
       }
-      content.find('a[href^=/wiki/]').each(function () {
+      content.find('a[href^="/wiki/"]').each(function () {
         // tips on hover
         var link_title = $(this).attr('title');
         $(this).attr('title', 'Left Click to open this article ("' + link_title + '") with QuickWiki');
@@ -282,7 +275,7 @@ chrome.extension.onRequest.addListener(
   function (request, sender, sendResponse) {
     if (request.disable === 1) {
       quickwiki_close();
-      $('a[href^=/wiki/]').each(function () {
+      $('a[href^="/wiki/"]').each(function () {
         $(this).unbind('click');
       });
       sendResponse({});

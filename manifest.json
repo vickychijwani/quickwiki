@@ -19,7 +19,7 @@
     {
       "matches": ["*://*/wiki/*"],
       "css": ["style.css", "icons.css", "scrollbar.css", "loader.css"],
-      "js": ["jquery-1.4.2.min.js", "script.js"],
+      "js": ["jquery-1.11.2.min.js","script.js"],
       "run_at": "document_end"
     }
   ],
