@@ -2,6 +2,7 @@ $(function () {
   chrome.extension.sendRequest({ localstorage: 'disabled'}, function (response) {
     if (response.disabled == 0 || response.disabled == undefined) {
       QuickWiki();
+      QuickWikiPopup();    
     }
   });
 });
@@ -242,6 +243,7 @@ function loadContent(url) {
   $('#wiki-title-info').html(get_loader_html());
   content.load(url, function (res, status, xhr) {
     $('#wiki-title-info').remove('');
+    $('.wiki-popup-body').remove();  
     $("#wiki-title").prepend('<div id="wiki-title-info"></div>');
     if (status != 'error') {
       var heading = content
@@ -258,6 +260,7 @@ function loadContent(url) {
         // tips on hover
         var link_title = $(this).attr('title');
         $(this).attr('title', 'Left Click to open this article ("' + link_title + '") with QuickWiki');
+        bindPopup($(this),{});          //bind hover popup in QuickWiki modal  
 
         $(this).unbind('click').click(function (e) {
           e.preventDefault();
@@ -321,4 +324,114 @@ function getIdTag() {
       idTag = "#content";
   }
   return idTag;
+}
+
+//Popup on Hover feature
+function QuickWikiPopup() {
+    if(!isWikia()) {                  //not supporting wikia.com content for now
+        $('a[href^="/wiki/"]')
+            .each(function(i) {
+                bindPopup($(this),{});
+            });    
+    }
+}
+
+
+
+
+//bind Popup to link
+function bindPopup(element,parent) {
+    var config = {};
+    config.link = window.location.protocol+'//'+window.location.host+element.attr('href'); //+' ' + getIdTag() + ' p'
+    config.id = randId();
+    var o = element.offset();
+    var w = element.width();
+    var h = element.height();
+    config.timedOut = false;
+    config.top = o.top + h;
+    config.left = o.left;
+    //check if popup will exceed right viewport boundary
+    var rightDiff = config.left+400 - $(window).width();
+    if(rightDiff>0) {
+        config.left = config.left - rightDiff;
+    }
+    element.mouseenter(function() {
+        parent.child = config.id;
+        //remove child of config if any
+        delete config.child;
+        setTimeout(function() {
+            config.timedOut = true;
+        },15000);
+        loadPopupContent(config);
+        //return config.id;
+    });
+    
+}
+
+
+//generate Random ID number
+function randId() {
+    return Math.floor(Math.random()*16777215).toString(16);
+}
+
+//remove Popup on link hover out
+function removePopup(id) {
+    $('#popup'+id).remove();
+}
+
+//simple cache to save requests by id
+var popupCache = {};
+
+//load Popup content
+function loadPopupContent(config) {
+    //check for cache content
+    if(popupCache.hasOwnProperty(config.id)) {
+        renderPopup(popupCache[config.id],config);
+    } else {
+        //not found in cache, so issue GET request
+        $.get(config.link,function(data) {
+            //request returned with data
+            var mainContent = $(data).filter(getIdTag);
+            var firstPara = mainContent.find('#mw-content-text > p')[0];
+            var image = mainContent.find('#mw-content-text .infobox .image img')[0] || 
+                mainContent.find('#mw-content-text .thumb .image img')[0];
+            if(firstPara==undefined||firstPara=="") firstPara = mainContent.find('p')[0];
+            var popupData = { "text" : firstPara, "image" : image };
+            popupCache[config.id] = popupData;
+            if(!config.timedOut) {
+                renderPopup(popupData,config);    
+            }
+
+        });
+    }
+}
+
+
+//create Popup on link hover
+function renderPopup(data,config) {
+    
+    //check first whether this popup is already present
+    if(!$('#popup'+config.id).length>0) {
+    
+        $('body').append('<div id="popup' + config.id + '" class="wiki-popup"></div>');
+        var popup = $('#popup'+config.id);
+        popup
+            .css({top : config.top, left : config.left})
+            .append('<div class="wiki-popup-body" id="body' + config.id + '"><div class="imageWrap"></div><div class="popupContent"></div></div>');
+            //.append('<div id="wiki-popup-footer">(Shift Click link to open in QuickWiki)</div>');
+        $('#popup'+config.id).mouseleave(function() {
+            if(config.child===undefined)
+                removePopup(config.id);
+                delete config.child;
+        });
+
+        var popupBody = $('#body'+config.id + ' .popupContent');
+        var popupImage = $('#body'+config.id + ' .imageWrap');
+        popupBody.html(data.text);
+        if(data.image!=undefined)
+            popupImage.html('<img src="'+data.image.src+'" alt="popupImage"/>');
+        popupBody.find('a[href^="/wiki/"]').each(function () {
+            bindPopup($(this),config);            //set id for child page
+        });
+    }
 }
