@@ -243,7 +243,7 @@ function loadContent(url) {
   $('#wiki-title-info').html(get_loader_html());
   content.load(url, function (res, status, xhr) {
     $('#wiki-title-info').remove('');
-    $('.wiki-popup-body').remove();  
+    $('.wiki-popup').remove();      //remove all modal hovers
     $("#wiki-title").prepend('<div id="wiki-title-info"></div>');
     if (status != 'error') {
       var heading = content
@@ -344,26 +344,30 @@ function bindPopup(element,parent) {
     var config = {};
     config.link = window.location.protocol+'//'+window.location.host+element.attr('href'); //+' ' + getIdTag() + ' p'
     config.id = randId();
-    var o = element.offset();
-    var w = element.width();
-    var h = element.height();
+    element.attr("popupid",config.id);      //set popupid attr for every link, which is used later for positioning hovers
     config.timedOut = false;
-    config.top = o.top + h;
-    config.left = o.left;
-    //check if popup will exceed right viewport boundary
-    var rightDiff = config.left+400 - $(window).width();
-    if(rightDiff>0) {
-        config.left = config.left - rightDiff;
-    }
+    
     element.mouseenter(function() {
+        config.hover = true;
         parent.child = config.id;
         //remove child of config if any
         delete config.child;
         setTimeout(function() {
             config.timedOut = true;
         },15000);
-        loadPopupContent(config);
+        //set a time lag on hover in the link, if still hover then display
+        //if lag is not present, then on every mousehover wiki hover fires, creating a cluttered page
+        //the time lag should be optimally set, not too late, not too fast
+        setTimeout(function() {
+            if(config.hover) {
+                loadPopupContent(config);
+            }
+        },2000);
         //return config.id;
+    });
+    
+    element.mouseleave(function() {
+        config.hover = false;
     });
     
 }
@@ -415,8 +419,19 @@ function renderPopup(data,config) {
     
         $('body').append('<div id="popup' + config.id + '" class="wiki-popup"></div>');
         var popup = $('#popup'+config.id);
+        var element = $("[popupid*='" + config.id + "']");
+        var o = element.offset();
+        var w = element.width();
+        var h = element.height();
+        var top = o.top + h;
+        var left = o.left;
+        //check if popup will exceed right viewport boundary
+        var rightDiff = left+400 - $(window).width();
+        if(rightDiff>0) {
+            left = left - rightDiff;
+        }
         popup
-            .css({top : config.top, left : config.left})
+            .css({top : top, left : left})
             .append('<div class="wiki-popup-body" id="body' + config.id + '"><div class="imageWrap"></div><div class="popupContent"></div></div>');
             //.append('<div id="wiki-popup-footer">(Shift Click link to open in QuickWiki)</div>');
         $('#popup'+config.id).mouseleave(function() {
