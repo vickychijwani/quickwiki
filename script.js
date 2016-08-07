@@ -214,6 +214,7 @@ function toggle(direction, minimize_to) {
       $('#wiki-restore').unbind('click').click(function () {
         toggle(1, minimize_to);
       });
+      $('#wiki-close').on('click', quickwiki_close);
     });
   }
   else {
