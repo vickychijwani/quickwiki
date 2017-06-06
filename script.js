@@ -12,6 +12,13 @@ function quickwiki_close() {
 }
 
 function QuickWiki() {
+  // close popup on Esc
+  $(document).keyup(function (event) {
+    if (event.which === 27) {
+      quickwiki_close();
+    }
+  });
+
   $('a[href^="/wiki/"]')                //providing quotes in href is mandatory post jquery 1.4
   //.not('a[href*=:]')
   //.not('a[href^=/wiki/Main_Page]')
