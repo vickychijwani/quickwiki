@@ -43,7 +43,7 @@ function QuickWiki() {
           var o = $(this).offset();
           var w = $(this).width();
           var h = $(this).height();
-          var top, left, minimize_to; 
+          var top, left, minimize_to;
 
           // calculate the position of the QuickWiki window in such a way that it never goes out of the browser's current view
           if (h <= 16) {
@@ -62,15 +62,15 @@ function QuickWiki() {
           else {
             left = o.left;
             top = o.top + 40;
-            minimize_to = 'top left'; 
+            minimize_to = 'top left';
           }
-            
-          // always keep the modal within the browser viewport in respect to height  
+
+          // always keep the modal within the browser viewport in respect to height
           var diff = (top+550-$(document).scrollTop())-$(window).height();
-            
+
           if(diff > 0) {
             top = top - diff - 20;                  //extra padding of 20
-            if(top<0) top = 5;                      //adjust top position if exceeds viewport from top  
+            if(top<0) top = 5;                      //adjust top position if exceeds viewport from top
           }
 
           if (o.left + w + 525 < $(window).width()) {
@@ -157,7 +157,7 @@ function QuickWiki() {
           });
           $('#wiki-close, #wiki-open').on('click', quickwiki_close);
 
-            
+
           // load the content from the link into the QuickWiki "window"
           loadContent(window.location.protocol+'//'+window.location.host+$(this).attr('href')+' ' + getIdTag());
 
@@ -169,11 +169,11 @@ function QuickWiki() {
               var dy = d.offset().top;
               var xgap = e.pageX - dx;
               var ygap = e.pageY - dy;
-              
+
               $(document).mousemove(function (e) {
                 var x = e.pageX - xgap;
                 var y = e.pageY - ygap;
-                
+
                 if (e.pageX >= 0 && e.pageY >= 0) d.css({ left: x, top: y });
                 return true;
               });
@@ -273,8 +273,8 @@ function loadContent(url) {
         });
       });
       //always render scroll to top, specially added to handle in modal window navigations
-      $(this).scrollTop(0);    
-      
+      $(this).scrollTop(0);
+
     }
   });
 }
@@ -313,13 +313,13 @@ function get_loader_html() {
 
 function isWikia() {
   var host = window.location.host;
-  return host.indexOf("wikia.com") > -1; 
+  return host.indexOf("wikia.com") > -1;
 }
 
 //set appropriate content id for url type
 
 function getIdTag() {
-  var idTag = '';     
+  var idTag = '';
   if(isWikia()) {
       //the link is from wikia.com, set appropriate id tag
       idTag = "#WikiaMainContentContainer";

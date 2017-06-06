@@ -1,19 +1,12 @@
 QuickWiki
 =========
 
-A Google Chrome extension that allows users to become wiki-ninjas overnight by making it dead-simple to explore Wikipedia (or any other wiki on the web).
+A Google Chrome extension that allows users to become wiki-ninjas overnight by making it dead-simple to explore Wikipedia (or any other wiki on the web). When browsing Wikipedia or most wikis, simply **Shift + Left Click** any link to another wiki article to open it in a popup.
 
 To install, visit the [extension page on the Chrome Webstore][install].
 
-First, a wacky analogy
-----------------------
-
-All you need to know, dear user, is the magic spell - **Shift + Left Click**. Cast the incantation on any inter-article link on a wiki and, lo and behold, the article appears!
-
-Now the sane stuff
-------------------
-
-Yeah, I know. The magic analogy annoys the hell out of me, too. Time to ditch it and let the screenshots do the rest of the talking:
+Screenshots
+-----------
 
 ![Preview window (English Wikipedia)](screenshots/screen1.png "Preview window (English Wikipedia)")
 
