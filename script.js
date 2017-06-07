@@ -159,7 +159,7 @@ function QuickWiki() {
 
 
           // load the content from the link into the QuickWiki "window"
-          loadContent(window.location.protocol+'//'+window.location.host+$(this).attr('href')+' ' + getIdTag());
+          loadContent(window.location.protocol+'//'+window.location.host+$(this).attr('href')+' ' + getIdTag(),[]);
 
           // make the QuickWiki "window" draggable
           title
@@ -243,11 +243,24 @@ function toggle(direction, minimize_to) {
   }
 }
 
-function loadContent(url) {
+function loadContent(url,history) {
   var wiki = $('#wiki-preview');
   var title = $('#wiki-title');
   var content = $('#wiki-content');
+  var title = $('#wiki-title');    
   $('#wiki-title-info').html(get_loader_html());
+  //put back button if history not empty
+  if(history.length!=0) {
+      title.find('#controls > p')
+            .prepend('<i class="icon-arrow-left" id="wiki-back" title="Back"></i>');
+      $("#wiki-back").on('click',function() {
+          var link = history[history.length-1];
+          history.pop();
+          loadContent(window.location.protocol+'//'+window.location.host+link+' ' + getIdTag(),history);
+      });
+  } else {
+      $("#wiki-back").remove();
+  }
   content.load(url, function (res, status, xhr) {
     $('#wiki-title-info').remove('');
     $("#wiki-title").prepend('<div id="wiki-title-info"></div>');
@@ -269,7 +282,8 @@ function loadContent(url) {
 
         $(this).unbind('click').click(function (e) {
           e.preventDefault();
-          loadContent(window.location.protocol+'//'+window.location.host+$(this).attr('href')+' ' + getIdTag());
+          history.push(url.replace(window.location.protocol+'//'+window.location.host,"").replace(getIdTag(),""));    
+          loadContent(window.location.protocol+'//'+window.location.host+$(this).attr('href')+' ' + getIdTag(),history);
         });
       });
       //always render scroll to top, specially added to handle in modal window navigations
