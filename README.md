@@ -45,6 +45,6 @@ All of those are welcome. You can [file issues][issues] or [submit pull requests
 [pgac]: http://developer.chrome.com/extensions/pageAction.html
 [issues]: https://github.com/vickychijwani/quickwiki/issues
 [pulls]: https://github.com/vickychijwani/quickwiki/pulls
-[docs]: http://developer.chrome.com/extensions/getstarted.html
+[docs]: https://developer.chrome.com/docs/extensions/mv3/getstarted/
 [webstore]: https://chrome.google.com/webstore
 [install]: https://chrome.google.com/webstore/detail/quickwiki/bbidbpklpaghmdjnlkkhkkobcbjgbkbd
